@@ -19,6 +19,7 @@ OSM/PT specific features:
 -   [ ] handle communication with [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_API_by_Example) and [OSM API v0.6](https://wiki.openstreetmap.org/wiki/API_v0.6)
 -   [ ] transform OSM to GeoJson data with [tyrasd/osmtogeojson](https://github.com/tyrasd/osmtogeojson)
 -   [ ] authorize users with osm-auth [osmlab/osm-auth](https://github.com/osmlab/osm-auth)
+-   [ ] [osmlab/OsmLint](https://github.com/osmlab/osmlint) for validation of metadata/geometry
 
 Support [Angular 4.1.3](https://angular.io/) and [Leaflet 1.0.3](http://leafletjs.com/) now!
 
