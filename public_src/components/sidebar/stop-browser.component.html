@@ -9,42 +9,21 @@
     <!--{{listOfStopsForRoute | json}}-->
 
     <div *ngIf="filteredView" class="small">
-        <table class="table-responsive table-condensed table-bordered table-hover table-striped">
-            <thead>
-            <tr>
-                <td></td>
-                <td><b>Role</b></td>
-                <td><b>Type</b></td>
-                <td><b>Ref</b></td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let stop of listOfStopsForRoute;">
-                <td class="explore" (click)="exploreStop($event, stop)"><i class="fa fa-search" aria-hidden="true"></i></td>
-                <td>{{stop.role}}</td>
-                <td>{{stop.type}}</td>
-                <td>{{stop.ref}}</td>
-            </tr>
-            </tbody>
-        </table>
+        <div *ngFor="let stop of listOfStopsForRoute; let i = index ;">
+            <span class="explore" (click)="exploreStop($event, stop)"><i class="fa fa-search" aria-hidden="true"></i></span>
+            <span> {{i + 1}}. {{stop.role}} {{stop.tags.name || stop.id}}
+                <span>
+                    <img *ngIf="stop.tags.public_transport === 'platform'" src="/images/transport/platform.png" alt="platform">
+                    <img *ngIf="stop.tags.public_transport === 'stop_position'" src="/images/transport/bus.png" alt="stop">
+                </span>
+            </span>
+        </div>
     </div>
 
-    <div *ngIf="listOfStops.length !== 0 && !filteredView" class="small">
-        <table class="table-responsive table-condensed table-bordered table-hover table-striped">
-            <thead>
-                <tr>
-                    <td></td>
-                    <td><b>Id</b></td>
-                    <td><b>Tags</b></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let stop of listOfStops" id="{{stop.id}}">
-                    <td class="explore" (click)="exploreStop($event, stop)"><i class="fa fa-search" aria-hidden="true"></i></td>
-                    <td>{{stop.id}}</td>
-                    <td>{{stop.tags | json}}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div *ngIf="listOfStops.length !== 0 && !filteredView; " class="small">
+        <div *ngFor="let stop of listOfStops" id="{{stop.id}}">
+            <span class="explore" (click)="exploreStop($event, stop)"><i class="fa fa-search" aria-hidden="true"></i></span>
+            <span> {{stop.tags.public_transport}} {{stop.tags.name || stop.id}} </span>
+        </div>
     </div>
 </div>
