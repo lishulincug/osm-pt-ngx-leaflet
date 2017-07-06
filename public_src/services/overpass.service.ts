@@ -287,7 +287,7 @@ export class OverpassService {
      * @param metadata - contains source and comment added by user
      * @returns {string}
      */
-    private createChangeset(metadata: object): string {
+    public createChangeset(metadata: object): string {
         console.log("LOG (overpass)", metadata["source"], metadata["comment"]);
         const changeset = create("osm").ele("changeset")
             .ele("tag", { "k": "created_by", "v": ConfigService.appName }).up()

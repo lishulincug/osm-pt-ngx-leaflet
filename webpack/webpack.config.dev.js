@@ -39,6 +39,13 @@ module.exports = {
             { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, use:[{ loader: "file-loader", options: { name: "fonts/[name].[ext]"} } ]}
         ],
         noParse: [ path.join(__dirname, "node_modules", "angular2", "bundles") ]
+        // ,
+        // postLoaders: [ {
+        //     test: /\.tsx?$/i,
+        //     include: /(src)/,
+        //     exclude: /(node_modules|resources\/js\/vendor)/,
+        //     loader: 'istanbul-instrumenter-loader'
+        // } ]
     },
     plugins: [
         new ExtractTextPlugin("[name].[contenthash].css"),
