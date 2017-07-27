@@ -11,6 +11,7 @@ const srcDir = "public_src";
 const outputDir = "../public";
 
 module.exports = {
+    context: path.resolve(__dirname),
     devtool: "inline-source-map",
     entry: {
         app: path.resolve(srcDir, "bootstrap.ts")
@@ -68,6 +69,10 @@ module.exports = {
         }, {
             from: "public_src/land_single.html",
             to: ""
-        }])
+        }]),
+        new webpack.SourceMapDevToolPlugin({
+            filename: null, // if no value is provided the sourcemap is inlined
+            test: /\.(ts|js)($|\?)/i // process .js and .ts files only
+        })
     ]
 };

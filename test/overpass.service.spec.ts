@@ -1,14 +1,13 @@
-import {inject, TestBed} from "@angular/core/testing";
-import {OverpassService} from "../public_src/services/overpass.service";
-import {ConfigService} from "../public_src/services/config.service";
-import {LoadingService} from "../public_src/services/loading.service";
-import {AuthService} from "../public_src/services/auth.service";
-import {EditingService} from "../public_src/services/editing.service";
-import {ProcessingService} from "../public_src/services/processing.service";
-import {StorageService} from "../public_src/services/storage.service";
-import {MapService} from "../public_src/services/map.service";
-import {Http} from "@angular/http";
-
+import { inject, TestBed } from "@angular/core/testing";
+import { OverpassService } from "../public_src/services/overpass.service";
+import { ConfigService } from "../public_src/services/config.service";
+import { LoadingService } from "../public_src/services/loading.service";
+import { AuthService } from "../public_src/services/auth.service";
+import { EditingService } from "../public_src/services/editing.service";
+import { ProcessingService } from "../public_src/services/processing.service";
+import { StorageService } from "../public_src/services/storage.service";
+import { MapService } from "../public_src/services/map.service";
+import { Http } from "@angular/http";
 
 describe("Service: OverpassService", () => {
     // ...variable declarations
@@ -49,6 +48,4 @@ describe("Service: OverpassService", () => {
     //
     //
     // });
-
 });
-
