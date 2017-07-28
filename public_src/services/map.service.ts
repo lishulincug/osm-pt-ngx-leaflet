@@ -6,11 +6,8 @@ import { LoadingService } from "./loading.service";
 import { StorageService } from "./storage.service";
 
 import { Map } from "leaflet";
-import domUtil = L.DomUtil;
-import latLng = L.latLng;
-import LatLng = L.LatLng;
-import LatLngExpression = L.LatLngExpression;
-import LatLngLiteral = L.LatLngLiteral;
+// import LatLng = L.LatLng;
+// import LatLngExpression = L.LatLngExpression;
 
 import { IPtStop } from "../core/ptStop.interface";
 
@@ -247,9 +244,10 @@ export class MapService {
             const featureId = featureTypeId[1];
             const lat = marker.feature.geometry.coordinates[1];
             const lng = marker.feature.geometry.coordinates[0];
-            const originalCoords: LatLng = new LatLng(lat, lng);
-            const newCoords: LatLng = marker["_latlng"]; // .; getLatLng()
-            const distance = originalCoords.distanceTo(newCoords);
+            const originalCoords = { lat, lng };
+            const newCoords = marker["_latlng"]; // .; getLatLng()
+            // const distance = originalCoords.distanceTo(newCoords);
+            const distance = 1;
             if (distance > 100) {
                 marker.setLatLng(originalCoords).update();
                 alert("Current node was dragged more than 100 meters away -> resetting position.");
@@ -317,7 +315,7 @@ export class MapService {
      * @param refId
      * @returns {{lat: number, lng: number}}
      */
-    public findCoordinates(refId): LatLngExpression {
+    public findCoordinates(refId) {
         for (const stop of this.storageService.listOfStops) {
             if (stop.id === refId) {
                 return { lat: stop.lat, lng: stop.lon };
@@ -361,7 +359,7 @@ export class MapService {
         for (const member of rel.members) {
             if (member.type === "node" && ["stop", "stop_entry_only"].indexOf(member.role) > -1) {
                 this.storageService.stopsForRoute.push(member.ref);
-                const latlng: LatLngExpression = this.findCoordinates(member.ref);
+                const latlng = this.findCoordinates(member.ref);
                 if (latlng) {
                     latlngs.push(latlng);
                 }
@@ -394,7 +392,7 @@ export class MapService {
             if (member.type === "node" && ["stop", "stop_entry_only", "stop_exit_only"]
                     .indexOf(member.role) > -1) {
                 this.storageService.stopsForRoute.push(member.ref);
-                const latlng: LatLngExpression = this.findCoordinates(member.ref);
+                const latlng = this.findCoordinates(member.ref);
                 if (latlng) {
                     latlngs.push(latlng);
                 }
@@ -431,9 +429,9 @@ export class MapService {
     }
 
     public drawTooltipFromTo(rel): void {
-        const latlngFrom: LatLngExpression = this.findCoordinates(
+        const latlngFrom = this.findCoordinates(
             this.storageService.stopsForRoute[0]);
-        const latlngTo: LatLngExpression = this.findCoordinates(
+        const latlngTo = this.findCoordinates(
             this.storageService.stopsForRoute[this.storageService.stopsForRoute.length - 1]);
 
         const from = rel.tags.from || "#FROM";

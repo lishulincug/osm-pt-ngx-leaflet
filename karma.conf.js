@@ -11,7 +11,7 @@ module.exports = function(config) {
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: "",
+        basePath: "./",
         /*
          * frameworks to use
          * available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -30,12 +30,16 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            entry,
+            // entry,
             "test/main.js",
-            // "node_modules/@types/leaflet/index.d.ts",
-            // {pattern: "node_modules/**/*.js"},
-            // {pattern: "node_modules/@types/**/*.ts"}
+            "node_modules/@types/leaflet/index.d.ts",
         ],
+        // "test/main.spec.ts",
+        // "test/overpass.service.spec.ts",
+        // "node_modules/leaflet/src/Leaflet.js"
+        // "node_modules/@types/leaflet/index.d.ts",
+        // {pattern: "node_modules/**/*.js"},
+        // {pattern: "node_modules/@types/**/*.ts"}
 
         // list of files to exclude
         exclude: [ ],
@@ -44,9 +48,11 @@ module.exports = function(config) {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             "test/main.js": ["webpack", "sourcemap"],
-            // "public_src/**/*": ["webpack", "sourcemap"],
-            "test/*.spec.ts": ["webpack", "sourcemap"]
+            "public_src/**/*.ts": ["webpack", "sourcemap"],
+            "node_modules/@types/leaflet/index.d.ts": ["webpack", "sourcemap"],
+            "node_modules/leaflet/src/Leaflet.js": ["webpack", "sourcemap"]
         },
+        // "test/*.spec.ts": ["webpack", "sourcemap"],
 
         // test results reporter to use
         // possible values: "dots", "progress"
