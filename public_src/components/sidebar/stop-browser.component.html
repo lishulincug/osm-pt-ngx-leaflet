@@ -60,11 +60,24 @@
             </thead>
             <tbody>
                 <tr *ngFor="let stop of listOfStops" id="{{stop.id}}" class="explore" (dblclick)="exploreStop($event, stop)">
-                    <td>{{stop.tags.name || stop.id}}</td>
+                    <td>
+                        <!--<i *ngIf="isDownloaded(stop.id)" class="fa fa-check-square-o" aria-hidden="true"-->
+                        <!--tooltip="Stop's relations are checked and downloaded" container="body"></i>-->
+                        <!--<i *ngIf="!isDownloaded(stop.id)" class="fa fa-square-o" aria-hidden="true"-->
+                        <!--tooltip="Stops's relations are not checked" container="body"></i>-->
+                        <!--<i *ngIf="isStored(stop.id)" class="fa fa-check-square-o" aria-hidden="true"-->
+                        <!--tooltip="Stop's relations are stored in map" container="body"></i>-->
+                        <!--<i *ngIf="!isStored(stop.id)" class="fa fa-square-o" aria-hidden="true"-->
+                        <!--tooltip="Stops's relations are not stored in map" container="body"></i>-->
+                        {{stop.tags.name || stop.id}}
+                    </td>
                     <td>{{stop.tags.public_transport}}</td>
                     <td>{{stop.tags.route_ref}}</td>
                 </tr>
             </tbody>
         </table>
+        <!--{{elementsDownloaded.keys()}}-->
+        <!--...-->
+        <!--{{elementsMap.keys()}}-->
     </div>
 </div>

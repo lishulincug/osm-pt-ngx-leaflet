@@ -25,6 +25,8 @@ export class StopBrowserComponent {
     private listOfStops: object[] = this.storageService.listOfStops;
     private filteredView: boolean;
     private editingMode: boolean;
+    // private elementsMap: any;
+    // private elementsDownloaded: any;
 
     constructor(private storageService: StorageService,
                 private processingService: ProcessingService,
@@ -48,7 +50,6 @@ export class StopBrowserComponent {
                 if (data === "stop") {
                     this.listOfStopsForRoute = this.storageService.listOfStopsForRoute;
                     this.currentElement = this.storageService.currentElement;
-                    console.log(this.currentElement, this.listOfStopsForRoute);
                 }
             }
         );
