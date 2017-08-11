@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 
+import { EditingService } from "../../services/editing.service";
 import { ProcessingService } from "../../services/processing.service";
 import { StorageService } from "../../services/storage.service";
 
@@ -15,7 +16,7 @@ import { StorageService } from "../../services/storage.service";
 export class RelationBrowserComponent {
     private listOfVariants = this.storageService.listOfVariants;
 
-    constructor(private storageService: StorageService,
+    constructor(private storageService: StorageService, private editingService: EditingService,
                 private processingService: ProcessingService) {
     }
 
@@ -36,5 +37,9 @@ export class RelationBrowserComponent {
 
     private exploreRelation($event: any, rel: any): void {
         this.processingService.exploreRelation(rel, true, false, true);
+    }
+
+    private createRouteVariant(): void {
+        this.editingService.createRoute(true);
     }
 }

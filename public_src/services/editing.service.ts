@@ -240,7 +240,7 @@ export class EditingService {
     /**
      * Creates completely new route with basic object structure.
      */
-    public createRoute(): void {
+    public createRoute(addToMaster?: boolean): void {
         const newId = this.findNewId();
         const newRoute: IPtRelationNew = {
             id: newId,
