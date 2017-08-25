@@ -13,12 +13,14 @@ import "dragula/dist/dragula.css";
 import "font-awesome/css/font-awesome.css";
 import "leaflet/dist/leaflet.css";
 
+import { APP_BASE_HREF } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { BrowserModule } from "@angular/platform-browser";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterModule, Routes } from "@angular/router";
 import { BusyModule } from "angular2-busy";
 import { DragulaModule } from "ng2-dragula";
 import {
@@ -48,6 +50,11 @@ import { StorageService } from "./services/storage.service";
 
 import { KeysPipe } from "./components/pipes/keys.pipe";
 
+const routes: Routes = [
+    { path: "", component: AppComponent },
+    { path: "**", redirectTo: "" }
+];
+
 @NgModule({
     bootstrap: [AppComponent],
     declarations: [
@@ -66,7 +73,8 @@ import { KeysPipe } from "./components/pipes/keys.pipe";
     imports: [AccordionModule.forRoot(), HttpModule, FormsModule, BrowserModule,
         ModalModule.forRoot(), CarouselModule.forRoot(),
         BusyModule, BrowserAnimationsModule, DragulaModule, TooltipModule.forRoot(),
-        ButtonsModule.forRoot(), TypeaheadModule.forRoot() ],
+        ButtonsModule.forRoot(), TypeaheadModule.forRoot(), RouterModule.forRoot(routes) ],
+    exports: [RouterModule],
     providers: [
         MapService,
         GeocodingService,
@@ -77,7 +85,8 @@ import { KeysPipe } from "./components/pipes/keys.pipe";
         LoadingService,
         EditingService,
         AuthService,
-        KeysPipe
+        KeysPipe,
+        { provide: APP_BASE_HREF, useValue: "/" }
     ]
 })
 

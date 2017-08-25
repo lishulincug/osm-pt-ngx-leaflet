@@ -1,4 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
 
 import { EditorComponent } from "../editor/editor.component";
 import { TransporterComponent } from "../transporter/transporter.component";
@@ -32,7 +33,7 @@ export class ToolbarComponent {
 
     constructor(private mapService: MapService, private overpassService: OverpassService,
                 private configService: ConfigService, private storageService: StorageService,
-                private processingService: ProcessingService) {
+                private processingService: ProcessingService, private router: Router) {
         this.downloading = true;
         this.filtering = this.configService.cfgFilterLines;
         this.processingService.refreshSidebarViews$.subscribe(
@@ -135,5 +136,13 @@ export class ToolbarComponent {
 
     private clearHighlight(): void {
         return this.mapService.clearHighlight();
+    }
+
+    private getLoadAndZoomUrl(): string {
+        return "/http://127.0.0.1:8111/load_and_zoom?left=" + this.mapService.map.getBounds().getWest() +
+            "&right" + this.mapService.map.getBounds().getEast() +
+            "&top" + this.mapService.map.getBounds().getNorth() +
+            "&bottom" + this.mapService.map.getBounds().getSouth() +
+            "&select=" + this.currentElement.type + this.currentElement.id;
     }
 }
