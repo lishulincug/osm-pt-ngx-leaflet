@@ -49,7 +49,6 @@ export class EditingService {
              * @param data
              */
             (data) => {
-                console.log("LOG (editing s.) Editing mode change in editingService- ", data);
                 this.editing = data;
                 this.storageService.markersMap.forEach( (marker) => {
                     if (this.editing === false) {
@@ -118,34 +117,27 @@ export class EditingService {
 
         switch (editObj.type) {
             case "add tag":
-                console.log("LOG (editing s.) Should add this tag: ", editObj);
                 const atElem = this.storageService.elementsMap.get(editObj.id);
                 atElem.tags[editObj.change.key] = editObj.change.value;
                 this.storageService.elementsMap.set(editObj.id, atElem);
-                console.log("LOG (editing s.) Added element: ", atElem);
                 break;
             case "remove tag":
-                console.log("LOG (editing s.) Should remove this tag: ", editObj);
                 const rtElem = this.storageService.elementsMap.get(editObj.id);
                 delete rtElem.tags[editObj.change.key];
                 this.storageService.elementsMap.set(editObj.id, rtElem);
-                console.log("LOG (editing s.) Removed element: ", rtElem);
                 break;
             case "change tag":
-                console.log("LOG (editing s.) I should make this change: ", editObj);
                 const chtElem = this.storageService.elementsMap.get(editObj.id);
                 delete chtElem.tags[editObj.change.from.key];
                 chtElem.tags[editObj.change.to.key] = editObj.change.to.value;
                 this.storageService.elementsMap.set(editObj.id, chtElem);
                 break;
             case "change members":
-                console.log("LOG (editing s.) I should change members", editObj);
                 const chmElem = this.storageService.elementsMap.get(editObj.id);
                 chmElem.members = editObj.change.to;
                 this.storageService.elementsMap.set(editObj.id, chmElem);
                 break;
             case "add element":
-                console.log("LOG (editing s.) I should add element", editObj);
                 if (!this.storageService.elementsMap.get(editObj.id)) {
                     this.storageService.elementsMap.set(editObj.id, editObj.change.to);
                 } else {
@@ -155,14 +147,12 @@ export class EditingService {
                 this.processingService.refreshTagView(this.storageService.elementsMap.get(editObj.id));
                 break;
             case "modify element":
-                console.log("LOG (editing s.) I should modify element", editObj);
                 const modObj = this.storageService.elementsMap.get(editObj.id);
                 modObj.lat = editObj.change.to.lat;
                 modObj.lon = editObj.change.to.lon;
                 this.storageService.elementsMap.set(editObj.id, modObj);
                 break;
             case "add route":
-                console.log("LOG (editing s.) I should add route", editObj);
                 if (!this.storageService.elementsMap.get(editObj.id)) {
                     this.storageService.elementsMap.set(editObj.id, editObj.change.to);
                     this.storageService.listOfRelations.push(editObj.change.to); // unshift
@@ -173,11 +163,9 @@ export class EditingService {
                 this.processingService.refreshTagView(this.storageService.elementsMap.get(editObj.id));
                 break;
             case "toggle members":
-                console.log("LOG (editing s.) Should change members for this created route", editObj);
                 this.storageService.elementsMap.set(element.id, element); // save modified relation
                 break;
             case "create master":
-                console.log("LOG (editing s.) I should add route_master", editObj);
                 if (!this.storageService.elementsMap.get(editObj.id)) {
                     this.storageService.elementsMap.set(editObj.id, editObj.change.to);
                     this.storageService.listOfMasters.push(editObj.change.to); // unshift
@@ -248,8 +236,6 @@ export class EditingService {
                     public_transport: "platform"
                 };
                 break;
-            default:
-                console.log("LOG (editing s.) Type was created: ", creatingElementOfType);
         }
         let change = { from: undefined, to: newElement };
         this.addChange(newElement, "add element", change);
@@ -333,7 +319,6 @@ export class EditingService {
      * @param {number} masterId
      */
     public changeRouteMasterMembers(relId: number, routeMasterId: number): void {
-        console.log("LOOOOOOG test ", typeof relId, relId, typeof routeMasterId, routeMasterId);
         let routeMaster = this.storageService.elementsMap.get(routeMasterId);
         let change: any = { from: JSON.parse(JSON.stringify(routeMaster.members)) };
         let newMember = {
@@ -367,7 +352,7 @@ export class EditingService {
             return alert("Relation was not found " + JSON.stringify(this.storageService.currentElement));
         }
         if (!featureId && rel.members.length === 0) {
-            return console.log("LOG: no members and nothing to highlight - ending"); // FIXME console.log
+            return console.error("LOG: no members and nothing to highlight - ending"); // FIXME console.log
         } else {
             this.mapService.clearCircleHighlight();
             const feature = this.storageService.elementsMap.get(featureId);
@@ -415,8 +400,6 @@ export class EditingService {
                 rel.members.push(memberToToggle);
             }
 
-            // highlight all members (with/without selected node)
-            console.log("LOG (mapservice s.) This relation with members l.", rel, rel.members.length);
             // get all members to highlight
             if (rel["members"].length > 0) {
                 this.storageService.elementsToHighlight.clear();
@@ -429,18 +412,16 @@ export class EditingService {
 
             change.to = rel;
             if (JSON.stringify(change.from) === JSON.stringify(change.to)) {
-                console.log("FIXME: relations (before, after) are identical!");
+                console.error("FIXME: relations (before, after) are identical!");
             }
             this.addChange(rel, "toggle members", change);
 
-            console.log("LOG (editing s.) Array highlight", Array.from(this.storageService.elementsToHighlight.values()));
             const clickedNode: IPtStop = this.storageService.elementsMap.get(featureId);
 
             // create array of circles to highlight and add to map
             let membersHighlight = [];
             for (let id of Array.from(this.storageService.elementsToHighlight.values())) {
                 const node = this.storageService.elementsMap.get(id);
-                console.log("LOG (editing s.) Creating circle for node:", node);
                 let circle = L.circleMarker([node.lat, node.lon], {
                     radius: 15,
                     color: "#00ffff",

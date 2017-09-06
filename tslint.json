@@ -45,7 +45,7 @@
         ],
         "no-angle-bracket-type-assertion": true,
         "no-bitwise": false,
-        "no-console": false,
+        "no-console": true,
         "no-duplicate-variable": true,
         "no-eval": true,
         "no-internal-module": true,
